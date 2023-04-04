@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+	<h:form>
+		<h:outputText value="• Funcionário: " />
+		
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Nome: " for="nome" />
+			<h:inputText value="#{funcionarioBean.funcionario.nome}" id="nome" required="true" requiredMessage="O Nome é obrigatório!" />
+			
+			<h:outputLabel value="CPF: " for="cpf" />
+			<h:inputText value="#{funcionarioBean.funcionario.cpf}" id="cpf" required="true" requiredMessage="CPF é obrigatório!" maxlength="11"/>
+			
+			<h:outputLabel value="Idade: " for="idade" />
+			<h:inputText value="#{funcionarioBean.funcionario.idade}" id="idade" required="true" requiredMessage="Idade é obrigatório!" />
+			
+			<h:outputLabel value="Salário: " for="salario" />
+			<h:inputText value="#{funcionarioBean.funcionario.salario}" id="salario" required="true" requiredMessage="Salário é obrigatório!" />
+			
+			<h:outputLabel value="Filial: " for="filial" />
+			<h:selectOneMenu value="#{funcionarioBean.idFilialSelecionada}" id="filial">
+			<f:selectItem itemLabel="Selecione..." itemValue="0"/>
+			<f:selectItems value="#{funcionarioBean.filiais}" var="filialAtual" 
+							itemLabel="#{filialAtual.nome}" itemValue="#{filialAtual.id}"/>			
+			</h:selectOneMenu>
+		</h:panelGrid>
+		
+		<br />
+		<h:outputText value="• Endereço: " />
+		
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Rua: " for="rua" />
+			<h:inputText value="#{funcionarioBean.funcionario.endereco.rua}" id="rua" required="true" requiredMessage="Campo obrigatório!"/>
+			
+			<h:outputLabel value="Número: " for="numero" />
+			<h:inputText value="#{funcionarioBean.funcionario.endereco.numero}" id="numero" required="true" requiredMessage="Campo obrigatório!" />
+			
+			<h:outputLabel value="Bairro: " for="bairro" />
+			<h:inputText value="#{funcionarioBean.funcionario.endereco.bairro}" id="bairro" required="true" requiredMessage="Campo obrigatório!"/>
+			
+			<h:outputLabel value="Cidade: " for="cidade" />
+			<h:inputText value="#{funcionarioBean.funcionario.endereco.cidade}" id="cidade" required="true" requiredMessage="Campo obrigatório!" />
+			
+			<h:outputLabel value="CEP: " for="cep" />
+			<h:inputText value="#{funcionarioBean.funcionario.endereco.cep}" id="cep" required="true" requiredMessage="Campo obrigatório!" />
+		</h:panelGrid>
+		
+		<br />
+		<h:panelGrid columns="1">
+			<h:commandButton action="#{funcionarioBean.gravarFuncionario()}" cellpadding="10" value="Registrar" />
+		</h:panelGrid>
+		<br />
+		<h:messages id="msgFuncionario" />
+		<br />
+	</h:form>
+	
+	<h:form>
+		<h:outputText value="Busca de funcionários(as):" />
+		<h:panelGrid columns="3">
+			<h:outputLabel value="Nome: " />
+			<h:inputText value="#{funcionarioBean.filtro}" />
+			<h:commandButton action="#{funcionarioBean.filtrarFuncionario()}" value="Filtrar" />	
+		</h:panelGrid>		
+	</h:form>
+	
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:dataTable value="#{funcionarioBean.listaFuncionarios}" var="funcAtual" border="1">
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:outputText value="#{funcAtual.nome}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">CPF</f:facet>
+					<h:outputText value="#{funcAtual.cpf}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Filial</f:facet>
+					<h:outputText value="#{funcAtual.filial.nome}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Editar</f:facet>
+					<h:commandButton action="#{funcionarioBean.carregarFuncionario(funcAtual)}" value="Editar" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Excluir</f:facet>
+					<h:commandButton action="#{funcionarioBean.excluirFuncionario(funcAtual)}" value="Excluir" />
+				</h:column>
+			</h:dataTable>
+		</h:panelGrid>
+	</h:form>
+</body> 
+</html>

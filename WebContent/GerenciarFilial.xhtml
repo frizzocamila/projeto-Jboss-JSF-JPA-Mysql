@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+	<h:form>
+		<h:outputText value="• Filial: " />
+		
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Nome: " for="nome" />
+			<h:inputText value="#{filialBean.filial.nome}" id="nome" required="true" requiredMessage="O Nome é obrigatório!" />
+			
+			<h:outputLabel value="CNPJ: " for="cnpj" />
+			<h:inputText value="#{filialBean.filial.cnpj}" id="cnpj" required="true" requiredMessage="CNPJ é obrigatório!" maxlength="14"/>
+		</h:panelGrid>
+		
+		<br />
+		<h:outputText value="• Endereço: " />
+		
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Rua: " for="rua" />
+			<h:inputText value="#{filialBean.filial.endereco.rua}" id="rua" required="true" requiredMessage="Campo obrigatório!"/>
+			
+			<h:outputLabel value="Número: " for="numero" />
+			<h:inputText value="#{filialBean.filial.endereco.numero}" id="numero" required="true" requiredMessage="Campo obrigatório!" />
+			
+			<h:outputLabel value="Bairro: " for="bairro" />
+			<h:inputText value="#{filialBean.filial.endereco.bairro}" id="bairro" required="true" requiredMessage="Campo obrigatório!"/>
+			
+			<h:outputLabel value="Cidade: " for="cidade" />
+			<h:inputText value="#{filialBean.filial.endereco.cidade}" id="cidade" required="true" requiredMessage="Campo obrigatório!" />
+			
+			<h:outputLabel value="CEP: " for="cep" />
+			<h:inputText value="#{filialBean.filial.endereco.cep}" id="cep" required="true" requiredMessage="Campo obrigatório!" />
+		</h:panelGrid>
+		
+		<br />
+		<h:panelGrid columns="1">
+			<h:commandButton action="#{filialBean.gravarFilial()}" cellpadding="10" value="Registrar" />
+		</h:panelGrid>
+		<br />
+		<h:messages id="msgfilial" />
+		<br />
+	</h:form>
+	
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:dataTable value="#{filialBean.listaFiliais}" var="filialAtual" border="1">
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:outputText value="#{filialAtual.nome}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">CNPJ</f:facet>
+					<h:outputText value="#{filialAtual.cnpj}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Endereço</f:facet>
+					<h:outputText value="#{filialAtual.endereco.enderecoResumido}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Num. Funcionários</f:facet>
+					<h:outputText value="#{filialBean.pegarNumFuncionarios(filialAtual)}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Editar</f:facet>
+					<h:commandButton action="#{filialBean.carregarFilial(filialAtual)}" value="Editar" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Excluir</f:facet>
+					<h:commandButton action="#{filialBean.excluirFilial(filialAtual)}" value="Excluir" />
+				</h:column>
+			</h:dataTable>
+		</h:panelGrid>
+	</h:form>
+</body> 
+</html>
